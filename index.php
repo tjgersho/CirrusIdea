@@ -2,13 +2,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Table</title>
     <meta charset="utf-8">
-    <title>Lifecycle</title>
-    <style>
-      body, textarea {
-        font-family: Courier;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="reactlearning.css">
   </head>
   <body>
     <div id="app">
@@ -17,73 +13,73 @@
     <script src="react/build/react.js"></script>
     <script src="react/build/react-dom.js"></script>
     <script>
-      var logMixin = {
-        _log: function(methodName, args) {
-          console.log(this.name + '::' + methodName, args);
-        },
-        componentWillUpdate:  function() {this._log('componentWillUpdate',  arguments);},
-        componentDidUpdate:   function() {this._log('componentDidUpdate',   arguments);},
-        componentWillMount:   function() {this._log('componentWillMount',   arguments);},
-        componentDidMount:    function() {this._log('componentDidMount',    arguments);},
-        componentWillUnmount: function() {this._log('componentWillUnmount', arguments);},
-      };
-
-      var Counter = React.createClass({
-        name: 'Counter',
-        mixins: [logMixin],
+      var Excel = React.createClass({
+        displayName: 'Excel',
+        
         propTypes: {
-          count: React.PropTypes.number.isRequired,
+          headers: React.PropTypes.arrayOf(
+            React.PropTypes.string
+          ),
+          initialData: React.PropTypes.arrayOf(
+            React.PropTypes.arrayOf(
+              React.PropTypes.string
+            )
+          ),
         },
+
+        getInitialState() {
+          return {data: this.props.initialData};
+        },
+        
         render: function() {
-          return React.DOM.span(null, this.props.count);
-        }
-      });
-
-      var TextAreaCounter = React.createClass({
-        name: 'TextAreaCounter',
-        mixins: [logMixin],
-
-        propTypes: {
-          defaultValue: React.PropTypes.string,
-        },
-
-        getInitialState: function() {
-          return {
-            text: this.props.defaultValue,
-          };
-        },
-
-        _textChange: function(ev) {
-          this.setState({
-            text: ev.target.value,
-          });
-        },
-
-        render: function() {
-          var counter = null;
-          if (this.state.text.length > 0) {
-            counter = React.DOM.h3(null, 
-              React.createElement(Counter, {
-                count: this.state.text.length,
-              })
-            );
-          }
-          return React.DOM.div(null,
-            React.DOM.textarea({
-              value: this.state.text,
-              onChange: this._textChange,
-            }),
-            counter
+          return (
+            React.DOM.table(null,
+              React.DOM.thead(null,
+                React.DOM.tr(null,
+                  this.props.headers.map(function(title, idx) {
+                    return React.DOM.th({key: idx}, title);
+                  })
+                )
+              ),
+              React.DOM.tbody(null,
+                this.state.data.map(function(row, idx) {
+                  return (
+                    React.DOM.tr({key: idx},
+                      row.map(function(cell, idx) {
+                        return React.DOM.td({key: idx}, cell);
+                      })
+                    )
+                  );
+                })
+              )
+            )
           );
         }
       });
-
-      var myTextAreaCounter = ReactDOM.render(
-        React.createElement(TextAreaCounter, {
-          defaultValue: "Bob",
+      
+      var headers = [
+        "Book", "Author", "Language", "Published", "Sales"
+      ];
+      
+      var data = [
+        ["The Lord of the Rings", "J. R. R. Tolkien", "English", "1954-1955", "150 million"], 
+        ["Le Petit Prince (The Little Prince)", "Antoine de Saint-Exupéry", "French", "1943", "140 million"], 
+        ["Harry Potter and the Philosopher's Stone", "J. K. Rowling", "English", "1997", "107 million"], 
+        ["And Then There Were None", "Agatha Christie", "English", "1939", "100 million"], 
+        ["Dream of the Red Chamber", "Cao Xueqin", "Chinese", "1754-1791", "100 million"], 
+        ["The Hobbit", "J. R. R. Tolkien", "English", "1937", "100 million"], 
+        ["She: A History of Adventure", "H. Rider Haggard", "English", "1887", "100 million"],
+      ];
+      
+      ReactDOM.render(
+        React.createElement(Excel, {
+          headers: headers,
+          initialData: data,
         }),
         document.getElementById("app")
       );
     </script>
   </body>
 </html>
+
+
