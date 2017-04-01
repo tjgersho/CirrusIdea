@@ -47,7 +47,7 @@
               value: this.state.text,
               onChange: this._textChange,
             }),
-            React.DOM.h3(null, this.state.text.length)
+            React.DOM.h3(null, this.state.text.length*2)
           );
         }
       });
