@@ -1,0 +1,25 @@
+{
+  "name": "CirrusIdea",
+  "version": "2.0.0",
+  "description": "CirrusIdea Built on React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tjgersho/CirrusIdea.git"
+  },
+  "keywords": [
+    "Change",
+    "the",
+    "World",
+    "with",
+    "Thought"
+  ],
+  "author": "tjgersho",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/tjgersho/CirrusIdea/issues"
+  }
+}
