@@ -1,10 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Greeter = require('Greeter');
-
-var firstName = 'Jen';
 
 ReactDOM.render(
-  <Greeter name={firstName}/>,
+  <h1>Boilerplate asdasdfasdf app!</h1>,
   document.getElementById('app')
 );
